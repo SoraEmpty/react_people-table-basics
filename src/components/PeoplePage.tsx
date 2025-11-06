@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getPeople } from "../api";
-import { Person } from "../types";
-import { Loader } from "./Loader";
-import { PeopleTable } from "./PeopleTable";
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { getPeople } from '../api';
+import { Person } from '../types';
+import { Loader } from './Loader';
+import { PeopleTable } from './PeopleTable';
 
 export const PeoplePage = () => {
   const [people, setPeople] = useState<Person[]>([]);
-  const [peopleByName, setPeopleByName] = useState<Map<string, Person>>(new Map());
+  const [peopleByName, setPeopleByName] = useState<Map<string, Person>>(
+    new Map(),
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -19,12 +21,12 @@ export const PeoplePage = () => {
       .then(receivedPeople => {
         const peopleWithSlug = receivedPeople.map(person => ({
           ...person,
-          slug: `${person.name.toLowerCase().replace(/\s+/g, "-")}-${person.born}`,
+          slug: `${person.name.toLowerCase().replace(/\s+/g, '-')}-${person.born}`,
         }));
 
         setPeople(peopleWithSlug);
         setPeopleByName(
-          new Map(peopleWithSlug.map(p => [p.name.toLowerCase().trim(), p]))
+          new Map(peopleWithSlug.map(p => [p.name.toLowerCase().trim(), p])),
         );
         setError(false);
       })
@@ -45,9 +47,7 @@ export const PeoplePage = () => {
       )}
 
       {!isLoading && !error && people.length === 0 && (
-        <p data-cy="noPeopleMessage">
-          There are no people on the server
-        </p>
+        <p data-cy="noPeopleMessage">There are no people on the server</p>
       )}
 
       {!isLoading && !error && people.length > 0 && (

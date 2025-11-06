@@ -7,20 +7,19 @@ import { PeoplePage } from './components/PeoplePage';
 
 export const App = () => (
   <>
-  <div data-cy="app">
-  <NavBar />
+    <div data-cy="app">
+      <NavBar />
 
-    <main className="section">
-      <div className="container">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/people/:slug?" element={<PeoplePage />} />
-          <Route path="/home" element={<Navigate to="/" replace />} />
-          <Route path="*" element={<NotFoundPage />} />
-
-        </Routes>
-
-      </div>
-    </main>
-  </div></>
+      <main className="section">
+        <div className="container">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/people/:slug?" element={<PeoplePage />} />
+            <Route path="/home" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </div>
+      </main>
+    </div>
+  </>
 );

@@ -1,5 +1,5 @@
-import { Person } from "../types";
-import { PersonLink } from "./PersonLink";
+import { Person } from '../types';
+import { PersonLink } from './PersonLink';
 
 interface Props {
   people: Person[];
@@ -7,7 +7,11 @@ interface Props {
   peopleByName: Map<string, Person>;
 }
 
-export const PeopleTable: React.FC<Props> = ({ people, selectedSlug, peopleByName }) => {
+export const PeopleTable: React.FC<Props> = ({
+  people,
+  selectedSlug,
+  peopleByName,
+}) => {
   return (
     <table
       data-cy="peopleTable"
@@ -38,19 +42,33 @@ export const PeopleTable: React.FC<Props> = ({ people, selectedSlug, peopleByNam
             <tr
               data-cy="person"
               key={person.slug}
-              className={person.slug === selectedSlug ? "has-background-warning" : ""}
+              className={
+                person.slug === selectedSlug ? 'has-background-warning' : ''
+              }
             >
-              <td><PersonLink person={person} /></td>
+              <td>
+                <PersonLink person={person} />
+              </td>
               <td>{person.sex}</td>
               <td>{person.born}</td>
               <td>{person.died}</td>
 
               <td>
-                {mother ? <PersonLink person={mother} /> : "-"}
+                  {mother
+                    ? <PersonLink person={mother} />
+                    : person.motherName
+                      ? person.motherName
+                      : "-"
+                  }
               </td>
 
-              <td>
-                {father ? <PersonLink person={father} /> : "-"}
+                              <td>
+                  {father
+                    ? <PersonLink person={father} />
+                    : person.fatherName
+                      ? person.fatherName
+                      : "-"
+                  }
               </td>
             </tr>
           );
