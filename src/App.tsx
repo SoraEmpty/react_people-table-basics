@@ -4,6 +4,7 @@ import { NavBar } from './components/Navbar';
 import { HomePage } from './components/HomePage';
 import { NotFoundPage } from './components/NotFoundPage';
 import { PeoplePage } from './components/PeoplePage';
+import { PersonPage } from './components/PersonPage';
 
 export const App = () => (
   <>
@@ -14,7 +15,9 @@ export const App = () => (
         <div className="container">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/people/:slug?" element={<PeoplePage />} />
+            <Route path="/people" element={<PeoplePage />}>
+              <Route path=":slug" element={<PersonPage />} />
+            </Route>
             <Route path="/home" element={<Navigate to="/" replace />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>

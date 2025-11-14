@@ -1,17 +1,22 @@
+import { useParams } from 'react-router-dom';
 import { Person } from '../types';
 import { PersonLink } from './PersonLink';
 
 interface Props {
   people: Person[];
-  selectedSlug: string | undefined;
   peopleByName: Map<string, Person>;
+  onSort: (field: string) => void;
+  order: string | null;
+  sortField: string | null;
 }
 
 export const PeopleTable: React.FC<Props> = ({
   people,
-  selectedSlug,
   peopleByName,
+  onSort,
 }) => {
+  const { slug } = useParams();
+
   return (
     <table
       data-cy="peopleTable"
@@ -19,10 +24,13 @@ export const PeopleTable: React.FC<Props> = ({
     >
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Sex</th>
-          <th>Born</th>
-          <th>Died</th>
+          <th onClick={() => onSort('name')}>Name</th>
+
+          <th onClick={() => onSort('sex')}>Sex</th>
+
+          <th onClick={() => onSort('born')}>Born</th>
+
+          <th onClick={() => onSort('died')}>Died</th>
           <th>Mother</th>
           <th>Father</th>
         </tr>
@@ -42,17 +50,17 @@ export const PeopleTable: React.FC<Props> = ({
             <tr
               data-cy="person"
               key={person.slug}
-              className={
-                person.slug === selectedSlug ? 'has-background-warning' : ''
-              }
+              className={person.slug === slug ? 'has-background-warning' : ''}
             >
               <td>
                 <PersonLink person={person} />
               </td>
-              <td>{person.sex}</td>
-              <td>{person.born}</td>
-              <td>{person.died}</td>
 
+              <td>{person.sex}</td>
+
+              <td>{person.born}</td>
+
+              <td>{person.died}</td>
               <td>
                 {mother ? (
                   <PersonLink person={mother} />
@@ -62,6 +70,7 @@ export const PeopleTable: React.FC<Props> = ({
                   '-'
                 )}
               </td>
+
               <td>
                 {father ? (
                   <PersonLink person={father} />
